@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Ads from "../ads/Ads";
 import axios from "axios";
- import SubscribeModal from "./subscribeModal";
+ import SubscribeModal from "../components//SubscribeModal.jsx";
 import Api_url from "../constant/constant";
 // Scholarship Detail Modal
 const ScholarshipDetailModal = ({ open, onClose, scholarship }) => {
@@ -254,7 +254,7 @@ const ScholarshipCarousel = ({ onViewDetails }) => {
   useEffect(() => {
     const fetchScholarships = async () => {
       try {
-        const res = await axios.get("http://localhost:5000/api/get/scholarship_data");
+        const res = await axios.get(`${Api_url.BACKEND_URI}/api/get/scholarship_data`);
         const now = new Date();
         const openScholarships = (res.data || []).filter(
           (s) => s.deadline && new Date(s.deadline) >= now
@@ -432,23 +432,24 @@ const Homepage = () => {
                 Postgraduate
               </Link>
               <Link
-                to="/scholarships/international"
+                to="/internship"
                 className="bg-gray-200 hover:bg-blue-600 hover:text-white text-gray-800 px-6 py-2 rounded font-medium transition"
               >
-                International
+                Internship
               </Link>
               <Link
-                to="/scholarships/region"
+                to="/chinese_govt_scholarship"
                 className="bg-gray-200 hover:bg-blue-600 hover:text-white text-gray-800 px-6 py-2 rounded font-medium transition"
               >
-                By Region
+               Chinese govt scholarship
               </Link>
               <Link
-                to="/scholarships/field"
+                to="/fascholarship"
                 className="bg-gray-200 hover:bg-blue-600 hover:text-white text-gray-800 px-6 py-2 rounded font-medium transition"
               >
-                By Field
+                papularScholarship
               </Link>
+               
             </div>
           </div>
         </section>

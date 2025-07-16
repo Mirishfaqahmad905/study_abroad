@@ -37,7 +37,7 @@ const morgan = require('morgan'); // optional for logging
 const bodyParser = require('body-parser');
 const connectDb = require('./config/Db');
 const userRoute = require('./routes/useRoue.js'); // Make sure this path is correct
-
+const path=require('path');
 // Initialize dotenv
 dotenv.config();
 
@@ -46,6 +46,7 @@ connectDb();
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+const _dirname=path.resolve();
 
 // Middleware
 app.use(cors());
@@ -59,6 +60,15 @@ app.use('/uploads', express.static('uploads'));
 
 // API Routes
 app.use('/api', userRoute);
+// cors policy 
+app.use(cors({
+  origin: "https://scholarhip-site-frontend.vercel.app" // 👈 your frontend domain
+}));
+
+app.use(express.static(path.join(_dirname,"/frontend/dist")));
+app.get('*',(_,res)=>{
+   res.sendFile(path.resolve(_dirname,"frontend","dist","index.html"))
+});
 
 // Root route (optional)
 app.get('/', (req, res) => {
